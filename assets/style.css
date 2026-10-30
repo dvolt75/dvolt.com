@@ -1,0 +1,193 @@
+/* Layout: una pagina di libro. Testata corrente in alto, colonna di lettura stretta,
+   testo a fronte (originale a sinistra, traduzione a destra) allineato strofa per strofa. */
+@font-face { font-family: "IM Fell English"; src: url("fonts/im-fell-english-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "IM Fell English"; src: url("fonts/im-fell-english-latin-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Source Serif 4"; src: url("fonts/source-serif-4-latin-opsz-normal.woff2") format("woff2"); font-weight: 200 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Source Serif 4"; src: url("fonts/source-serif-4-latin-opsz-italic.woff2") format("woff2"); font-weight: 200 900; font-style: italic; font-display: swap; }
+
+:root {
+  --paper: #f1f2ec;      /* carta, leggermente verde */
+  --paper-2: #e7e9e0;    /* fondo secondario */
+  --ink: #1d231b;        /* inchiostro */
+  --muted: #5b6455;      /* testo secondario */
+  --rule: #c9cebf;       /* filetti */
+  --cloth: #2f4a2a;      /* la tela verde del 1855 */
+  --gilt: #84661f;       /* l'oro del titolo */
+  --display: "IM Fell English", "Iowan Old Style", Georgia, serif;
+  --body: "Source Serif 4", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --measure: 38rem;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #121611; --paper-2: #1a2018; --ink: #e1e4d8; --muted: #9ca592;
+    --rule: #2e352b; --cloth: #a3c08f; --gilt: #cfae62; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #121611; --paper-2: #1a2018; --ink: #e1e4d8; --muted: #9ca592;
+  --rule: #2e352b; --cloth: #a3c08f; --gilt: #cfae62; color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: 1.125rem; line-height: 1.6;
+  font-optical-sizing: auto; text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--cloth); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: var(--gilt); }
+:focus-visible { outline: 2px solid var(--gilt); outline-offset: 3px; border-radius: 2px; }
+
+.wrap { max-width: 64rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Testata */
+.masthead { border-bottom: 1px solid var(--rule); }
+.masthead .wrap { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 2rem; padding-block: 1.1rem 0.9rem; }
+.brand { font-family: var(--display); font-size: 1.45rem; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
+.brand span { color: var(--gilt); font-style: italic; }
+.nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.1rem; font-size: 0.8rem; letter-spacing: 0.09em; text-transform: uppercase; }
+.nav a { color: var(--muted); text-decoration: none; padding-block: 0.2rem; border-bottom: 1px solid transparent; }
+.nav a:hover { color: var(--ink); }
+.nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--gilt); }
+
+main { padding-block: 3rem 4rem; }
+.col { max-width: var(--measure); }
+
+/* Tipografia */
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.2rem, 5vw, 3.4rem); }
+h2 { font-size: 1.6rem; margin-top: 2.4rem; margin-bottom: 0.6rem; }
+h3 { font-size: 1.3rem; }
+p { margin: 0 0 1rem; }
+.lead { font-size: 1.3rem; line-height: 1.5; }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
+.eyebrow b { color: var(--gilt); font-weight: 600; }
+.page-head { margin-bottom: 2.2rem; display: grid; gap: 0.4rem; }
+.page-head .sub { font-style: italic; color: var(--muted); font-size: 1.15rem; }
+
+/* Home */
+.hero { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 2.5rem; align-items: end; padding-bottom: 2.5rem; border-bottom: 1px solid var(--rule); }
+.hero figure { margin: 0; }
+.hero img { width: 100%; mix-blend-mode: multiply; filter: contrast(1.05); }
+:root[data-theme="dark"] .hero img { mix-blend-mode: normal; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero img { mix-blend-mode: normal; } }
+.hero h1 { font-size: clamp(3rem, 9vw, 5.6rem); line-height: 0.95; }
+.hero h1 em { display: block; font-size: 0.42em; color: var(--gilt); margin-top: 0.6rem; letter-spacing: 0.01em; }
+.hero .epigraph { margin-top: 1.6rem; font-size: 1.15rem; line-height: 1.55; }
+.hero .epigraph .en { color: var(--muted); font-style: italic; font-size: 0.95rem; margin-top: 0.5rem; }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 0 2.5rem; margin-top: 2.5rem; }
+.home-grid a.entry { display: block; padding-block: 1.1rem; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); }
+.home-grid a.entry strong { font-family: var(--display); font-weight: 400; font-size: 1.45rem; display: block; color: var(--cloth); }
+.home-grid a.entry span { color: var(--muted); font-size: 1rem; }
+.home-grid a.entry:hover strong { color: var(--gilt); }
+
+/* Indice delle poesie */
+.toc-group { margin-top: 2.6rem; }
+.toc-group header { display: grid; gap: 0.2rem; margin-bottom: 0.7rem; }
+.toc-group h2 { margin: 0; }
+.toc-group h2 small { font-family: var(--body); font-style: italic; font-size: 0.95rem; color: var(--muted); margin-left: 0.5rem; }
+.toc-group header p { color: var(--muted); font-size: 1rem; margin: 0; }
+.toc { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.toc li { border-bottom: 1px solid var(--rule); }
+.toc a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.2rem 1rem; padding-block: 0.65rem; text-decoration: none; color: var(--ink); }
+.toc a:hover .t { color: var(--cloth); }
+.toc .t { font-size: 1.12rem; }
+.toc .o { grid-column: 1; font-style: italic; color: var(--muted); font-size: 0.95rem; }
+.toc .y { grid-row: 1 / span 2; grid-column: 2; align-self: center; font-variant-numeric: oldstyle-nums tabular-nums; color: var(--gilt); font-size: 0.95rem; }
+.toc .x { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-left: 0.4rem; }
+
+/* Pagina della poesia */
+.poem-head { max-width: var(--measure); margin-bottom: 1.4rem; display: grid; gap: 0.45rem; }
+.poem-head .orig { font-style: italic; color: var(--muted); font-size: 1.2rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-size: 0.88rem; color: var(--muted); }
+.meta b { font-weight: 600; color: var(--ink); }
+.switch { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; padding: 3px; gap: 2px; margin: 0.6rem 0 2rem; background: var(--paper-2); }
+.switch button { font: inherit; font-size: 0.82rem; letter-spacing: 0.06em; border: 0; background: transparent; color: var(--muted); padding: 0.35rem 0.9rem; border-radius: 999px; cursor: pointer; }
+.switch button[aria-pressed="true"] { background: var(--paper); color: var(--ink); box-shadow: 0 0 0 1px var(--rule); }
+.switch .wide-only { display: none; }
+@media (min-width: 52rem) { .switch .wide-only { display: inline-block; } }
+
+.section-no { font-family: var(--display); color: var(--gilt); font-size: 1.5rem; text-align: center; margin: 2.2rem 0 1rem; max-width: var(--measure); }
+.poem[data-view="af"] .section-no { max-width: none; }
+.stanzas { display: grid; gap: 1.15rem; }
+.stanza { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+.stanza > div { min-width: 0; }
+.ln { padding-left: 1.2em; text-indent: -1.2em; line-height: 1.5; }
+.ln.in { padding-left: 3.8em; }
+.en { font-style: italic; color: var(--muted); }
+.en .ln { font-size: 0.98rem; }
+
+.poem[data-view="it"] .en { display: none; }
+.poem[data-view="en"] .it { display: none; }
+.poem[data-view="en"] .en { color: var(--ink); font-style: normal; }
+.poem[data-view="it"] .stanzas, .poem[data-view="en"] .stanzas { max-width: var(--measure); }
+@media (min-width: 52rem) {
+  .poem[data-view="af"] .stanza { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 2.75rem; }
+  .poem[data-view="af"] .stanza > .en { order: 0; }
+  .poem[data-view="af"] .stanza > .it { order: 1; }
+  .poem[data-view="af"] .colheads { display: grid; }
+}
+@media (max-width: 51.99rem) { .poem[data-view="af"] .en { display: none; } }
+.colheads { display: none; grid-template-columns: 1fr 1fr; column-gap: 2.75rem; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); padding-bottom: 0.4rem; margin-bottom: 1.2rem; }
+
+.note { max-width: var(--measure); margin-top: 3rem; padding-top: 1.4rem; border-top: 1px solid var(--rule); font-size: 1rem; }
+.note h2 { font-size: 1.25rem; margin: 0 0 0.6rem; }
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; max-width: var(--measure); font-size: 0.98rem; }
+.pager a { text-decoration: none; display: grid; gap: 0.1rem; max-width: 18rem; }
+.pager a small { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.pager .next { text-align: right; margin-left: auto; }
+
+/* Cronologia */
+.chrono { margin: 1rem 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.55rem 1.4rem; font-size: 1rem; }
+.chrono dt { font-variant-numeric: oldstyle-nums tabular-nums; color: var(--gilt); white-space: nowrap; }
+.chrono dd { margin: 0; }
+.two { display: grid; grid-template-columns: minmax(0, var(--measure)) minmax(0, 18rem); gap: 3.5rem; align-items: start; }
+.aside { position: sticky; top: 1.5rem; border-top: 2px solid var(--cloth); padding-top: 0.8rem; }
+.aside h2 { margin-top: 0; font-size: 1.25rem; }
+
+/* Fotografie */
+.photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 2.4rem 2rem; }
+.photos figure { margin: 0; display: grid; gap: 0.7rem; align-content: start; scroll-margin-top: 1.5rem; }
+.photos .frame { background: var(--paper-2); padding: 1rem; display: grid; place-items: center; aspect-ratio: 4 / 5; max-width: 100%; }
+.photos img { max-height: 100%; width: auto; object-fit: contain; }
+.photos figcaption { font-size: 0.95rem; }
+.photos figcaption b { font-family: var(--display); font-weight: 400; font-size: 1.15rem; display: block; color: var(--ink); }
+.photos figcaption span { color: var(--muted); }
+
+/* Poeti */
+.poet { padding-block: 1.6rem; border-top: 1px solid var(--rule); scroll-margin-top: 1rem; }
+.poet h2 { margin: 0; }
+.poet .dates { color: var(--muted); font-size: 0.95rem; }
+.poet .work { font-style: italic; margin: 0.2rem 0 0.8rem; }
+.poet .src { font-size: 0.92rem; color: var(--muted); }
+.poet .src b { font-weight: 600; color: var(--ink); font-style: normal; }
+.sonnet { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.5rem; margin: 1.2rem 0; }
+@media (min-width: 46rem) { .sonnet { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.sonnet .st { margin-bottom: 0.9rem; line-height: 1.5; }
+.sonnet .es { font-style: italic; color: var(--muted); font-size: 1rem; }
+.sonnet h3 { font-family: var(--body); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+
+/* Risorse */
+.res { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
+.res li { padding-block: 1.1rem; border-bottom: 1px solid var(--rule); display: grid; gap: 0.25rem; }
+.res a { font-family: var(--display); font-size: 1.3rem; text-decoration: none; }
+.res .url { font-size: 0.82rem; color: var(--muted); overflow-wrap: anywhere; }
+
+/* Piede */
+.foot { border-top: 1px solid var(--rule); font-size: 0.88rem; color: var(--muted); }
+.foot .wrap { display: flex; flex-wrap: wrap; gap: 0.4rem 1.6rem; justify-content: space-between; padding-block: 1.4rem 2rem; }
+.foot a { color: var(--muted); }
+.addr { user-select: all; }
+
+@media (max-width: 46rem) {
+  main { padding-block: 2rem 3rem; }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .hero figure { max-width: 11rem; }
+  .two { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .aside { position: static; }
+  .ln.in { padding-left: 3.4em; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
