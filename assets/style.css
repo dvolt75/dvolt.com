@@ -191,3 +191,14 @@ p { margin: 0 0 1rem; }
   .ln.in { padding-left: 3.4em; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+/* edizione completa */
+.booknav { display: flex; flex-wrap: wrap; gap: 0.35rem 0.5rem; margin: 0 0 1rem; padding: 0; list-style: none; font-size: 0.9rem; }
+.booknav a { display: inline-block; padding: 0.15rem 0.55rem; border: 1px solid var(--rule); border-radius: 999px; text-decoration: none; color: var(--ink); }
+.booknav a:hover { border-color: var(--cloth); color: var(--cloth); }
+.booknav b { color: var(--gilt); font-weight: 600; margin-right: 0.3rem; font-variant-numeric: oldstyle-nums; }
+.toc-group h2 .num { color: var(--gilt); font-weight: 600; margin-right: 0.5rem; }
+.toc .sub-h { padding: 0.9rem 0 0.3rem; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); }
+.poem-head .epi { font-style: italic; color: var(--muted); font-size: 1rem; display: grid; gap: 0.1rem; }
+.poem-head .epi span[lang="en"] { font-size: 0.92rem; }
+.notice { border-left: 3px solid var(--gilt); padding: 0.6rem 0.9rem; margin: 1.2rem 0; color: var(--muted); font-size: 0.98rem; }
